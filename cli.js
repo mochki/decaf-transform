@@ -127,7 +127,7 @@ async function runTransforms(files) {
 function eslintFixFiles(files) {
   const cli = new CLIEngine({
     configFile: `${__dirname}/.eslintrc`,
-    fix: true
+    fix: true,
   })
   console.log('Running eslint --fix on all files')
   const report = cli.executeOnFiles(files)
@@ -139,12 +139,14 @@ async function prettifyFiles(files) {
   console.log('Running Prettier on all files')
   for (const file of files) {
     const formattedFile = prettier.format(await readFile(file, 'utf8'), {
+      arrowParens: 'avoid',
       bracketSpacing: false,
       parser: 'babel',
       printWidth: 120,
       semi: false,
       singleQuote: true,
-      tabWidth: 2
+      tabWidth: 2,
+      trailingComma: 'es5',
     })
     await writeFile(file, formattedFile)
   }
@@ -160,7 +162,7 @@ function parseArgs() {
     t: transform,
     e: eslintFix,
     p: prettify,
-    path
+    path,
   } = minimist(process.argv.slice(2))
   return {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path}
 }
