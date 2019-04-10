@@ -6,7 +6,7 @@ const minimist = require('minimist')
 const {flattenDeep} = require('lodash')
 const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
 
-module.exports = async () => {
+;(async function main() {
   try {
     const {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path} = parseArgs()
     if (help) return showHelp()
@@ -36,7 +36,7 @@ module.exports = async () => {
   } catch (e) {
     reportErrors(e)
   }
-}
+})()
 
 async function fetchAllFiles(potentialDirectories) {
   async function getFiles(dir, fileList = []) {
