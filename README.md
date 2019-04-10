@@ -6,7 +6,7 @@
 
 ## Usage
 ```
-npx decaf-blah [options]
+npx decaf-transform [options]
   -h                        shows this help
   -r                        replaces lines of code that say *.coffee to *.js
   -d                        decaffeinates coffee files & generates new js files
@@ -19,8 +19,8 @@ npx decaf-blah [options]
 
 Examples:
 ```
-  npx decaf --path modules/projects     to run everything against projects
-  npx decaf -p --path skeletor          runs prettier just in skeletor
-  npx decaf -rd                         ro run first two steps (can compare
-                                        new js files to old coffee)
+  npx decaf-transform --path modules/projects     to run everything against projects
+  npx decaf-transform -p --path skeletor          runs prettier just in skeletor
+  npx decaf-transform -rd                         ro run first two steps (can compare
+                                                  new js files to old coffee)
 ```
