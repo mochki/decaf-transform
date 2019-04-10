@@ -1,6 +1,6 @@
 {
   "name": "decaf-transform",
-  "version": "3.2.0",
+  "version": "3.2.1",
   "description": "Tool to decaf & transform a CoffeeScript React project using react dom factories to jsx",
   "homepage": "https://github.com/mkdorff/decaf-transform",
   "bin": {
@@ -11,7 +11,9 @@
     "name": "Mohonri Dorff",
     "url": "https://dorff.app"
   },
-  "scripts": {"start": "cli.js"},
+  "scripts": {
+    "start": "cli.js"
+  },
   "license": "ISC",
   "dependencies": {
     "decaffeinate": "^5.1.12",

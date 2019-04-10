@@ -15,13 +15,11 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
 
     const workingDirectory = `${process.cwd()}${path ? `/${path}` : ''}`
     const isFile = workingDirectory.endsWith('.coffee')
-    let potentialDirectories
-    if (!isFile) {
-      potentialDirectories = (await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`)
-    }
 
     // Initial batch of files
-    const files = isFile ? [workingDirectory] : await fetchAllFiles(potentialDirectories)
+    const files = isFile
+      ? [workingDirectory]
+      : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`))
     const coffeeFiles = files.filter(file => file.endsWith('.coffee'))
     const replacementCandidates = files.filter(file => file.match(/\.(coffee|md)$/))
 
@@ -33,7 +31,7 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
     const jsFiles = (replace || decaffeinate || removeAllCoffeeFiles || !customized
       ? isFile
         ? [workingDirectory.replace('.coffee', '.js')]
-        : await fetchAllFiles(potentialDirectories)
+        : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`))
       : files
     ).filter(file => file.endsWith('.js'))
 
