@@ -14,13 +14,13 @@ npx decaf-transform [options]
   -t                        runs transform (from js -> jsx)
   -e                        runs eslint --fix
   -p                        runs prettier
-  --path relative/path      specify a specific directory to work in
+  --path relative/path      specify a specific directory/file to work on
 ```
 
 Examples:
 ```
   npx decaf-transform --path modules/projects     to run everything against projects
   npx decaf-transform -p --path skeletor          runs prettier just in skeletor
-  npx decaf-transform -rd                         ro run first two steps (can compare
+  npx decaf-transform -rd                         to run first two steps (can compare
                                                   new js files to old coffee)
 ```

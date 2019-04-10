@@ -10,14 +10,18 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
 ;(async function main() {
   try {
     const {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path} = parseArgs()
+    const customized = replace || decaffeinate || removeCoffeeFiles || transform || eslintFix || prettify
     if (help) return showHelp()
 
     const workingDirectory = `${process.cwd()}${path ? `/${path}` : ''}`
-    const customized = replace || decaffeinate || removeCoffeeFiles || transform || eslintFix || prettify
-    const potentialDirectories = (await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`)
+    const isFile = workingDirectory.endsWith('.coffee')
+    let potentialDirectories
+    if (!isFile) {
+      potentialDirectories = (await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`)
+    }
 
     // Initial batch of files
-    const files = await fetchAllFiles(potentialDirectories)
+    const files = isFile ? [workingDirectory] : await fetchAllFiles(potentialDirectories)
     const coffeeFiles = files.filter(file => file.endsWith('.coffee'))
     const replacementCandidates = files.filter(file => file.match(/\.(coffee|md)$/))
 
@@ -27,7 +31,9 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
 
     // Files could change
     const jsFiles = (replace || decaffeinate || removeAllCoffeeFiles || !customized
-      ? await fetchAllFiles(potentialDirectories)
+      ? isFile
+        ? [workingDirectory.replace('.coffe', '.js')]
+        : await fetchAllFiles(potentialDirectories)
       : files
     ).filter(file => file.endsWith('.js'))
 
@@ -167,7 +173,7 @@ function showHelp() {
       Additionally, we can specify a path with --path relative/path/to/dir.
       If any other flags are set, the tool will only run the steps specified.
 
-    Usage:  npx decaf-blah [options]
+    Usage:  npx decaf-transform [options]
       -h                        shows this help
       -r                        replaces lines of code that say *.coffee to *.js
       -d                        decaffeinates coffee files & generates new js files
@@ -175,13 +181,13 @@ function showHelp() {
       -t                        runs transform (from js -> jsx)
       -e                        runs eslint --fix
       -p                        runs prettier
-      --path relative/path      specify a specific directory to work in
+      --path relative/path      specify a specific directory/file to work on
 
     Examples:
-      npx decaf --path modules/projects     to run everything against projects
-      npx decaf -p --path skeletor          runs prettier just in skeletor
-      npx decaf -rd                         ro run first two steps (can compare
-                                            new js files to old coffee)
+      npx decaf-transform --path modules/projects     to run everything against projects
+      npx decaf-transform -p --path skeletor          runs prettier just in skeletor
+      npx decaf-transform -rd                         to run first two steps (can compare
+                                                      new js files to old coffee)
     `)
 }
 
