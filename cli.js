@@ -1,3 +1,4 @@
+#!/usr/bin/env node
 const Runner = require('jscodeshift/src/Runner')
 const prettier = require('prettier')
 const CLIEngine = require('eslint').CLIEngine
