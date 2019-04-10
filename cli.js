@@ -32,7 +32,7 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
     // Files could change
     const jsFiles = (replace || decaffeinate || removeAllCoffeeFiles || !customized
       ? isFile
-        ? [workingDirectory.replace('.coffe', '.js')]
+        ? [workingDirectory.replace('.coffee', '.js')]
         : await fetchAllFiles(potentialDirectories)
       : files
     ).filter(file => file.endsWith('.js'))
