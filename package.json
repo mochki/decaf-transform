@@ -1,6 +1,6 @@
 {
   "name": "decaf-transform",
-  "version": "3.0.1",
+  "version": "3.1.0",
   "description": "Tool to decaf & transform a CoffeeScript React project using react dom factories to jsx",
   "homepage": "https://github.com/mkdorff/decaf-transform",
   "bin": {
