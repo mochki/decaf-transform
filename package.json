@@ -1,0 +1,20 @@
+{
+  "name": "decaf-transform",
+  "version": "1.0.0",
+  "description": "decaf-transform",
+  "bin": {
+    "decaf": "bin/decaf-transform"
+  },
+  "main": "index.js",
+  "author": "Mohonri Dorff",
+  "license": "ISC",
+  "dependencies": {
+    "decaffeinate": "^5.1.12",
+    "eslint": "^5.16.0",
+    "fs-extra": "^7.0.1",
+    "jscodeshift": "^0.6.3",
+    "lodash": "^4.17.11",
+    "minimist": "^1.2.0",
+    "prettier": "^1.16.4"
+  }
+}
