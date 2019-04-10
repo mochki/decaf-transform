@@ -1,12 +1,16 @@
 {
   "name": "decaf-transform",
   "version": "1.0.0",
-  "description": "decaf-transform",
+  "description": "Tool to decaf & transform a CoffeeScript React project using react dom factories to jsx",
+  "homepage": "https://github.com/mkdorff/decaf-transform",
   "bin": {
-    "decaf": "bin/decaf-transform"
+    "decaf-transform": "bin/decaf-transform"
   },
   "main": "index.js",
-  "author": "Mohonri Dorff",
+  "author": {
+    "name": "Mohonri Dorff",
+    "url": "https://dorff.app"
+  },
   "license": "ISC",
   "dependencies": {
     "decaffeinate": "^5.1.12",
@@ -16,5 +20,14 @@
     "lodash": "^4.17.11",
     "minimist": "^1.2.0",
     "prettier": "^1.16.4"
-  }
+  },
+  "keywords": [
+    "decaffeinate",
+    "decaf",
+    "tranfsorm",
+    "jscodeshift",
+    "coffeesript",
+    "coffee",
+    "jsx"
+  ]
 }
