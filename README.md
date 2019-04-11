@@ -15,6 +15,7 @@ npx decaf-transform [options]
   -e                        runs eslint --fix
   -p                        runs prettier
   --path relative/path      specify a specific directory/file to work on
+  --skip-subdirectories     Will only run on coffee files in the directory provided
 ```
 
 Examples:

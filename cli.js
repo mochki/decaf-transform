@@ -9,7 +9,17 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
 
 ;(async function main() {
   try {
-    const {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path} = parseArgs()
+    const {
+      help,
+      replace,
+      decaffeinate,
+      removeCoffeeFiles,
+      transform,
+      eslintFix,
+      prettify,
+      path,
+      skipSubdirectories,
+    } = parseArgs()
     const customized = replace || decaffeinate || removeCoffeeFiles || transform || eslintFix || prettify
     if (help) return showHelp()
 
@@ -19,7 +29,9 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
     // Initial batch of files
     const files = isFile
       ? [workingDirectory]
-      : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`))
+      : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`), {
+          skipSubdirectories,
+        })
     const coffeeFiles = files.filter(file => file.endsWith('.coffee'))
     const replacementCandidates = files.filter(file => file.match(/\.(coffee|md)$/))
 
@@ -31,7 +43,9 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
     const jsFiles = (replace || decaffeinate || removeAllCoffeeFiles || !customized
       ? isFile
         ? [workingDirectory.replace('.coffee', '.js')]
-        : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`))
+        : await fetchAllFiles((await readdir(workingDirectory)).map(dir => `${path ? `${path}/` : ''}${dir}`), {
+            skipSubdirectories,
+          })
       : files
     ).filter(file => file.endsWith('.js'))
 
@@ -43,7 +57,7 @@ const {readdir, readFile, stat, unlink, writeFile} = require('fs-extra')
   }
 })()
 
-async function fetchAllFiles(potentialDirectories) {
+async function fetchAllFiles(potentialDirectories, {skipSubdirectories}) {
   async function getFiles(dir, fileList = []) {
     const items = await readdir(dir)
     for (const item of items) {
@@ -59,7 +73,7 @@ async function fetchAllFiles(potentialDirectories) {
 
   const allFiles = []
   for (const directory of potentialDirectories) {
-    if ((await stat(directory)).isDirectory()) {
+    if ((await stat(directory)).isDirectory() && !skipSubdirectories) {
       allFiles.push(await getFiles(`${directory}/`))
     } else {
       allFiles.push(directory)
@@ -161,8 +175,9 @@ function parseArgs() {
     e: eslintFix,
     p: prettify,
     path,
+    'skip-subdirectories': skipSubdirectories,
   } = minimist(process.argv.slice(2))
-  return {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path}
+  return {help, replace, decaffeinate, removeCoffeeFiles, transform, eslintFix, prettify, path, skipSubdirectories}
 }
 
 function showHelp() {
@@ -182,6 +197,7 @@ function showHelp() {
       -e                        runs eslint --fix
       -p                        runs prettier
       --path relative/path      specify a specific directory/file to work on
+      --skip-subdirectories     Will only run on coffee files in the directory provided
 
     Examples:
       npx decaf-transform --path modules/projects     to run everything against projects
