@@ -93,7 +93,7 @@ async function replaceHardReferencesToCoffee(files) {
     const patchedSource = fileSource
       .map(line => {
         if (line.includes('isCoffee')) return line // The one of case it needs to stay
-        return line.replace('.coffee', '.js')
+        return line.replace('.coffee', '')
       })
       .join('\n')
     await writeFile(file, patchedSource)
@@ -190,7 +190,7 @@ function showHelp() {
 
     Usage:  npx decaf-transform [options]
       -h                        shows this help
-      -r                        replaces lines of code that say *.coffee to *.js
+      -r                        replaces lines of code that say *.coffee to no extension
       -d                        decaffeinates coffee files & generates new js files
       -m                        removes coffee files
       -t                        runs transform (from js -> jsx)

@@ -8,7 +8,7 @@
 ```
 npx decaf-transform [options]
   -h                        shows this help
-  -r                        replaces lines of code that say *.coffee to *.js
+  -r                        replaces lines of code that say *.coffee to no extension
   -d                        decaffeinates coffee files & generates new js files
   -m                        removes coffee files
   -t                        runs transform (from js -> jsx)
