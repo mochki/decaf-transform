@@ -1,0 +1,41 @@
+{
+  "name": "decaf-transform",
+  "version": "3.4.0",
+  "description": "Tool to decaf & transform a CoffeeScript React project using react dom factories to jsx",
+  "homepage": "https://github.com/mochki/decaf-transform",
+  "bin": {
+    "decaf-transform": "./cli.js"
+  },
+  "main": "cli.js",
+  "author": {
+    "name": "mochki"
+  },
+  "scripts": {
+    "start": "cli.js"
+  },
+  "license": "ISC",
+  "dependencies": {
+    "decaffeinate": "^5.1.12",
+    "eslint": "^5.16.0",
+    "fs-extra": "^7.0.1",
+    "jscodeshift": "^0.6.3",
+    "lodash": "^4.17.11",
+    "minimist": "^1.2.0",
+    "prettier": "^1.16.4"
+  },
+  "files": [
+    "cli.js",
+    "helpers/",
+    ".eslintrc",
+    ".prettierrc.json"
+  ],
+  "keywords": [
+    "decaffeinate",
+    "decaf",
+    "tranfsorm",
+    "jscodeshift",
+    "coffeesript",
+    "coffee",
+    "jsx"
+  ]
+}
